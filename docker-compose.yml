@@ -1,0 +1,138 @@
+# =============================================================================
+# TODO Microservice Application - Docker Compose
+#
+# ACCESS INSTRUCTIONS
+# ───────────────────
+# After `docker-compose up --build`, open:
+#   http://localhost:3000    ← React UI (Vite, via Nginx)
+#   http://localhost         ← Same React UI (alternative port)
+#   http://localhost/api/v1/todos/docs             ← Todo API docs
+#   http://localhost/api/v1/attachments/docs       ← Attachment API docs
+#   http://localhost/api/v1/notifications/docs     ← Notification API docs
+#   http://localhost:4566/_localstack/health       ← LocalStack health
+#   http://localhost:4566/_aws/ses                 ← Inspect sent emails
+#
+# ARCHITECTURE
+# ────────────
+#  todo-service        :8001  – CRUD on DynamoDB
+#  attachment-service  :8002  – Files in S3, metadata in DynamoDB
+#  notification-service:8003  – Sends email via SES, logs to DynamoDB
+#  nginx               :80    – Reverse proxy (routes all traffic)
+#  frontend            :3000  – Vite preview SPA (internal, accessed via nginx)
+#  localstack          :4566  – AWS emulator (S3 + SES + DynamoDB)
+# =============================================================================
+
+services:
+  # ── LocalStack (AWS Emulator) ──────────────────────────────────────────────
+  localstack:
+    image: localstack/localstack:3.4
+    container_name: todo-localstack
+    ports:
+      - "4566:4566"
+    environment:
+      - SERVICES=s3,ses,dynamodb
+      - DEBUG=1
+      - DOCKER_HOST=unix:///var/run/docker.sock
+      - AWS_DEFAULT_REGION=us-east-1
+      - PERSISTENCE=1
+    volumes:
+      - "./scripts/init_localstack.sh:/etc/localstack/init/ready.d/init_localstack.sh"
+      - "localstack_data:/var/lib/localstack"
+    networks:
+      - todo-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:4566/_localstack/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # ── Todo Service ───────────────────────────────────────────────────────────
+  todo-service:
+    build:
+      context: ./services/todo_service
+      dockerfile: Dockerfile
+    container_name: todo-service
+    ports:
+      - "8001:8001"
+    env_file:
+      - .env.docker
+    depends_on:
+      localstack:
+        condition: service_healthy
+    networks:
+      - todo-network
+
+
+  # ── Attachment Service ─────────────────────────────────────────────────────
+  attachment-service:
+    build:
+      context: ./services/attachment_service
+      dockerfile: Dockerfile
+    container_name: attachment-service
+    ports:
+      - "8002:8002"
+    env_file:
+      - .env.docker
+    depends_on:
+      localstack:
+        condition: service_healthy
+    networks:
+      - todo-network
+
+
+  # ── Notification Service ───────────────────────────────────────────────────
+  notification-service:
+    build:
+      context: ./services/notification_service
+      dockerfile: Dockerfile
+    container_name: notification-service
+    ports:
+      - "8003:8003"
+    env_file:
+      - .env.docker
+    depends_on:
+      localstack:
+        condition: service_healthy
+    networks:
+      - todo-network
+
+
+  # ── Frontend (React) ───────────────────────────────────────────────────────
+  # NOTE: Frontend is only accessible through Nginx (port 80).
+  #       Do NOT expose port 3000 directly – the SPA server returns
+  #       index.html for unknown routes, breaking API calls.
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: todo-frontend
+    expose:
+      - "3000"
+    networks:
+      - todo-network
+
+  # ── Nginx (Reverse Proxy) ─────────────────────────────────────────────────
+  nginx:
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: todo-nginx
+    ports:
+      - "80:80"
+      - "3000:80"   # also reachable at http://localhost:3000
+    depends_on:
+      - todo-service
+      - attachment-service
+      - notification-service
+      - frontend
+    networks:
+      - todo-network
+
+# ── Networks ───────────────────────────────────────────────────────────────────
+networks:
+  todo-network:
+    driver: bridge
+
+# ── Volumes ────────────────────────────────────────────────────────────────────
+volumes:
+  localstack_data:

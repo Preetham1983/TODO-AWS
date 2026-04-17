@@ -1,0 +1,333 @@
+/* =============================================================================
+   TodoItem styles
+   ============================================================================= */
+
+.todo-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  transition: all var(--transition);
+}
+
+.todo-item:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-sm);
+}
+
+.todo-item--completed {
+  opacity: 0.65;
+}
+
+.todo-item--completed .todo-item__title {
+  text-decoration: line-through;
+  color: var(--text-muted);
+}
+
+.todo-item__main {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 18px;
+}
+
+/* ── Status button ─────────────────────────────────────────────────────────── */
+
+.todo-item__status {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--border-primary);
+  background: transparent;
+  cursor: pointer;
+  transition: all var(--transition);
+  margin-top: 2px;
+}
+
+.todo-item__status--pending {
+  border-color: var(--accent-warning);
+  color: var(--accent-warning);
+}
+.todo-item__status--pending:hover {
+  background: rgba(251, 191, 36, 0.1);
+}
+
+.todo-item__status--in_progress {
+  border-color: var(--accent-info);
+  color: var(--accent-info);
+}
+.todo-item__status--in_progress:hover {
+  background: rgba(96, 165, 250, 0.1);
+}
+
+.todo-item__status--completed {
+  border-color: var(--accent-success);
+  color: var(--accent-success);
+  background: rgba(74, 222, 128, 0.1);
+}
+
+.todo-item__circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid var(--text-muted);
+}
+
+/* ── Content ───────────────────────────────────────────────────────────────── */
+
+.todo-item__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.todo-item__title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  word-break: break-word;
+}
+
+.todo-item__description {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+.todo-item__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.todo-item__status-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.45px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+}
+
+.todo-item__status-label--pending {
+  border-color: rgba(251, 191, 36, 0.38);
+  color: var(--accent-warning);
+  background: rgba(251, 191, 36, 0.08);
+}
+
+.todo-item__status-label--in_progress {
+  border-color: rgba(96, 165, 250, 0.38);
+  color: var(--accent-info);
+  background: rgba(96, 165, 250, 0.08);
+}
+
+.todo-item__status-label--completed {
+  border-color: rgba(74, 222, 128, 0.38);
+  color: var(--accent-success);
+  background: rgba(74, 222, 128, 0.08);
+}
+
+.todo-item__priority {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  padding: 2px 10px;
+  border-radius: 20px;
+}
+
+.todo-item__priority--low {
+  background: rgba(74, 222, 128, 0.12);
+  color: var(--accent-success);
+}
+.todo-item__priority--medium {
+  background: rgba(251, 191, 36, 0.12);
+  color: var(--accent-warning);
+}
+.todo-item__priority--high {
+  background: rgba(248, 113, 113, 0.12);
+  color: var(--accent-danger);
+}
+
+.todo-item__date {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.todo-item__attachment-count {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+/* ── Actions ───────────────────────────────────────────────────────────────── */
+
+.todo-item__actions {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.todo-item__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 36px;
+  height: 36px;
+  padding: 0 8px;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.todo-item__action-text {
+  display: none;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.todo-item__action-btn:hover {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border-color: var(--border-primary);
+}
+
+.todo-item__action-btn--danger:hover {
+  background: rgba(248, 113, 113, 0.1);
+  color: var(--accent-danger);
+  border-color: rgba(248, 113, 113, 0.3);
+}
+.todo-item__action-btn--edit:hover {
+  background: rgba(96, 165, 250, 0.1);
+  color: var(--accent-info);
+  border-color: rgba(96, 165, 250, 0.3);
+}
+
+.todo-item__action-btn--success:hover {
+  background: rgba(74, 222, 128, 0.1);
+  color: var(--accent-success);
+  border-color: rgba(74, 222, 128, 0.3);
+}
+
+.todo-item__action-btn--cancel:hover {
+  background: rgba(100, 116, 139, 0.1);
+  color: var(--text-secondary);
+  border-color: rgba(100, 116, 139, 0.3);
+}
+
+.todo-item__action-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* ── Edit Form ─────────────────────────────────────────────────────────────── */
+
+.todo-item--editing {
+  background: var(--bg-tertiary);
+  border-color: var(--accent-info);
+}
+
+.todo-item__edit-form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+.todo-item__edit-input {
+  font-size: 14px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: 8px 12px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all var(--transition);
+}
+
+.todo-item__edit-input:focus {
+  outline: none;
+  border-color: var(--accent-info);
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.1);
+}
+
+.todo-item__edit-textarea {
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: 8px 12px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  resize: vertical;
+  transition: all var(--transition);
+}
+
+.todo-item__edit-textarea:focus {
+  outline: none;
+  border-color: var(--accent-info);
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.1);
+}
+
+.todo-item__edit-select {
+  font-size: 13px;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  padding: 8px 12px;
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.todo-item__edit-select:focus {
+  outline: none;
+  border-color: var(--accent-info);
+  box-shadow: 0 0 0 2px rgba(96, 165, 250, 0.1);
+}
+
+@media (max-width: 680px) {
+  .todo-item__main {
+    flex-wrap: wrap;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .todo-item__actions {
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+  }
+
+  .todo-item__action-btn {
+    min-height: 34px;
+  }
+}
+
+@media (max-width: 480px) {
+  .todo-item__actions {
+    justify-content: flex-start;
+  }
+
+  .todo-item__action-btn {
+    background: var(--bg-tertiary);
+    border-color: var(--border-primary);
+  }
+
+  .todo-item__action-text {
+    display: inline;
+  }
+}

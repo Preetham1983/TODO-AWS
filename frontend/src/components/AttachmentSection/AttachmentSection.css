@@ -1,0 +1,146 @@
+/* =============================================================================
+   AttachmentSection styles
+   ============================================================================= */
+
+.attachment-section {
+  border-top: 1px solid var(--border-primary);
+  padding: 14px 18px;
+  background: #0c0c0c;
+}
+
+.attachment-section__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.attachment-section__header h4 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.attachment-section__upload-btn {
+  padding: 5px 14px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-primary);
+  border-radius: var(--radius-sm);
+  color: var(--accent-primary);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--transition);
+}
+
+.attachment-section__upload-btn:hover {
+  border-color: var(--accent-primary);
+  background: rgba(124, 131, 255, 0.08);
+}
+
+.attachment-section__empty {
+  font-size: 13px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 12px;
+}
+
+.attachment-section__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.attachment-section__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background: #121212;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-primary);
+}
+
+.attachment-section__info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.attachment-section__filename {
+  font-size: 13px;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.attachment-section__size {
+  font-size: 11px;
+  color: var(--text-muted);
+  flex-shrink: 0;
+}
+
+.attachment-section__item-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.attachment-section__download,
+.attachment-section__delete {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-sm);
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  transition: all var(--transition);
+  text-decoration: none;
+}
+
+.attachment-section__download {
+  background: rgba(124, 131, 255, 0.1);
+  color: var(--accent-primary);
+}
+
+.attachment-section__download:hover {
+  background: rgba(124, 131, 255, 0.2);
+}
+
+.attachment-section__delete {
+  background: rgba(248, 113, 113, 0.1);
+  color: var(--accent-danger);
+}
+
+.attachment-section__delete:hover {
+  background: rgba(248, 113, 113, 0.2);
+}
+
+@media (max-width: 520px) {
+  .attachment-section {
+    padding: 12px;
+  }
+
+  .attachment-section__header {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .attachment-section__item {
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .attachment-section__info {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+  }
+}
