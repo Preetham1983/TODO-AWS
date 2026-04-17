@@ -28,6 +28,7 @@ jobs:
 
   test:
     name: Pytest
+    needs: ruff
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
