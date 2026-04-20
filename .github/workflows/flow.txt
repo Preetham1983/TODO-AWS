@@ -1,0 +1,8 @@
+1. ✅ Triggers (push, pull_request, schedule, workflow_dispatch)
+2. ✅ Jobs, steps, needs
+3. → Matrix builds      (test on Python 3.11 AND 3.12 simultaneously)
+4. → Caching            (cache uv/pip to speed up runs)
+5. → Artifacts          (save test reports, build outputs)
+6. → Deployment jobs    (deploy to AWS, Railway, Vercel after tests pass)
+7. → Reusable workflows (DRY — share workflows across repos)
+8. → Self-hosted runners (use your own machine instead of GitHub's)
